@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>All Rounder | Entertainment</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+ background:#080d1b;color:white;
+ font-family:Arial,sans-serif;padding-bottom:75px
+}
+header{
+ height:65px;padding:0 5%;
+ display:flex;align-items:center;justify-content:space-between;
+ background:#10182b;position:sticky;top:0;z-index:10
+}
+.logo{font-size:23px;font-weight:900;letter-spacing:1px}
+.logo span{color:#21a5ff}
+.header-right{display:flex;gap:18px}
+.header-right button{
+ background:none;border:none;color:white;font-size:23px;
+ cursor:pointer
+}
+nav{
+ display:flex;gap:25px;overflow-x:auto;
+ padding:16px 5%;background:#10182b;
+ scrollbar-width:none
+}
+nav a{
+ color:#cbd4e5;text-decoration:none;
+ white-space:nowrap;font-size:14px
+}
+nav a:hover{color:#35b8ff}
+nav a:first-child{color:#35b8ff;font-weight:bold}
+
+.search{
+ display:none;padding:12px 5%;background:#10182b
+}
+.search input{
+ width:100%;padding:13px;border:1px solid #35445e;
+ border-radius:8px;background:#18253c;color:white
+}
+
+.hero{
+ margin:18px 3%;height:390px;
+ border-radius:15px;overflow:hidden;
+ position:relative;background:#172541
+}
+.hero img{
+ width:100%;height:100%;object-fit:cover;opacity:.68
+}
+.hero-content{
+ position:absolute;bottom:25px;left:25px;right:20px;
+ text-shadow:0 2px 8px #000
+}
+.hero h1{font-size:34px;margin-bottom:10px}
+.hero p{font-size:13px;color:#eee;margin-bottom:16px}
+.btn{
+ border:0;padding:12px 20px;border-radius:7px;
+ background:#168be9;color:white;font-weight:bold;
+ cursor:pointer;margin-right:7px
+}
+.btn.secondary{background:#29374e}
+.dots{
+ display:flex;justify-content:center;gap:8px;margin-top:12px
+}
+.dots i{
+ width:8px;height:8px;border-radius:50%;background:#56647b
+}
+.dots i:first-child{background:#28aaff}
+
+main{padding:0 4%}
+.section{margin:30px 0}
+.section-title{
+ font-size:19px;margin-bottom:15px;
+ display:flex;justify-content:space-between;align-items:center
+}
+.section-title small{font-size:12px;color:#35b8ff}
+
+.row{
+ display:flex;gap:13px;overflow-x:auto;
+ scrollbar-width:none;padding-bottom:8px
+}
+.poster,.coming-card{
+ flex:0 0 155px;background:#152138;
+ border-radius:10px;overflow:hidden;
+ cursor:pointer;transition:.2s
+}
+.poster:hover,.coming-card:hover{transform:scale(1.03)}
+.poster img,.coming-card img{
+ width:100%;aspect-ratio:2/3;object-fit:cover;
+ display:block;background:#27334a
+}
+.poster h3,.coming-info h3{
+ font-size:13px;padding:9px 8px 4px
+}
+.poster p,.coming-info p{
+ font-size:11px;color:#9caec7;padding:4px 8px 10px
+}
+
+.banner{
+ margin:30px 0;border-radius:12px;
+ padding:25px;background:linear-gradient(110deg,#142b52,#252047)
+}
+.banner h2{font-size:23px;margin-bottom:9px}
+.banner p{font-size:13px;color:#b8c6da;margin-bottom:14px}
+
+.category{
+ display:grid;grid-template-columns:repeat(3,1fr);gap:12px
+}
+.category div{
+ background:#192943;padding:23px 5px;text-align:center;
+ border-radius:10px;font-size:14px;font-weight:bold;
+ border:1px solid #293c59
+}
+.category span{display:block;font-size:27px;margin-bottom:8px}
+
+.download-box{
+ background:#152138;border-radius:12px;padding:18px;
+ display:flex;justify-content:space-between;align-items:center
+}
+.download-box p{font-size:12px;color:#a9bad1;margin-top:6px}
+
+.coming-card{flex-basis:170px}
+.coming-info{padding:9px}
+.coming-info h3{padding:0 0 7px}
+.coming-info p{padding:0 0 10px}
+.trailer-btn{
+ background:#168be9;color:white;border:0;
+ padding:9px;border-radius:6px;width:100%;
+ font-weight:bold;cursor:pointer
+}
+.trailer-modal{
+ display:none;position:fixed;inset:0;
+ background:#000e;z-index:100;
+ align-items:center;justify-content:center;padding:15px
+}
+.trailer-content{
+ width:100%;max-width:750px;background:#152138;
+ padding:15px;border-radius:12px
+}
+.trailer-content iframe{
+ width:100%;aspect-ratio:16/9;border:0
+}
+.close-trailer{
+ background:#e94353;color:white;border:0;
+ padding:9px 15px;border-radius:6px;margin-bottom:12px;
+ cursor:pointer
+}
+footer{
+ position:fixed;bottom:0;left:0;width:100%;
+ background:#10182b;display:flex;
+ justify-content:space-around;padding:12px 5%;
+ z-index:10;border-top:1px solid #26334b
+}
+footer a{
+ color:#bdc9db;text-decoration:none;
+ font-size:11px;text-align:center
+}
+footer span{display:block;font-size:20px;margin-bottom:4px}
+
+.empty{color:#8291a8;font-size:13px;padding:15px 0}
+
+/* ADMIN UPLOAD STYLE */
+.admin-panel{
+ display:none;
+ margin:20px 3%;
+ padding:20px;
+ background:#152138;
+ border:1px solid #293c59;
+ border-radius:12px
+}
+.admin-panel input,
+.admin-panel select,
+.admin-panel textarea{
+ width:100%;
+ padding:12px;
+ margin:8px 0 15px;
+ border-radius:7px;
+ border:1px solid #35445e;
+ background:#18253c;
+ color:white
+}
+.admin-panel label{
+ display:block;
+ font-size:13px;
+ color:#bdc9db;
+ margin-top:8px
+}
+.admin-panel h2{margin-bottom:15px}
+.uploaded-video-card{
+ flex:0 0 170px;
+ background:#152138;
+ border-radius:10px;
+ overflow:hidden;
+ padding:10px
+}
+.uploaded-video-card video{
+ width:100%;
+ aspect-ratio:2/3;
+ object-fit:contain;
+ background:#050914;
+ border-radius:7px
+}
+.uploaded-video-card h3{
+ font-size:13px;
+ margin:8px 0
+}
+.uploaded-video-card p{
+ font-size:11px;
+ color:#9caec7;
+ margin-bottom:8px
+}
+.uploaded-video-card a{
+ display:block;
+ color:#35b8ff;
+ font-size:12px;
+ margin-top:8px
+}
+.delete-video{
+ background:#d94353;
+ color:white;
+ border:0;
+ padding:8px;
+ border-radius:6px;
+ margin-top:8px;
+ cursor:pointer
+}
+
+@media(min-width:700px){
+ .hero{height:480px}
+ .hero-content{left:45px;bottom:45px}
+ .hero h1{font-size:48px}
+ .poster{flex-basis:190px}
+ .coming-card{flex-basis:205px}
+ .category{grid-template-columns:repeat(6,1fr)}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+ <div class="logo">ALL <span>ROUNDER</span></div>
+ <div class="header-right">
+  <button onclick="toggleSearch()">⌕</button>
+  <button onclick="adminLogin()" title="Admin Upload">＋</button>
+  <button onclick="alert('Profile coming soon!')">◉</button>
+ </div>
+</header>
+
+<div class="search" id="search">
+ <input id="searchInput"
+ placeholder="Search Movies, Series..."
+ oninput="searchVideos()">
+</div>
+
+<nav>
+ <a href="#home">For You</a>
+ <a href="#movies">Movies</a>
+ <a href="#shorts">Short Films</a>
+ <a href="#cartoons">Cartoons</a>
+ <a href="#series">Web Series</a>
+ <a href="#originals">Originals</a>
+ <a href="#comingSoon">Coming Soon</a>
+</nav>
+
+<!-- ADMIN PANEL -->
+
+<section class="admin-panel" id="adminPanel">
+ <h2>🔐 Admin Dashboard</h2>
+
+ <form id="uploadForm">
+
+  <label>Video Title</label>
+  <input type="text" id="videoTitle"
+   placeholder="Enter video name" required>
+
+  <label>Category</label>
+  <select id="videoCategory">
+   <option>Movies</option>
+   <option>Short Films</option>
+   <option>Cartoons</option>
+   <option>Web Series</option>
+   <option>Originals</option>
+  </select>
+
+  <label>Select Video</label>
+  <input type="file" id="videoFile"
+   accept="video/*" required>
+
+  <label>Select Poster (Optional)</label>
+  <input type="file" id="posterFile"
+   accept="image/*">
+
+  <label>Description</label>
+  <textarea id="videoDescription"
+   placeholder="Video description"></textarea>
+
+  <button class="btn" type="submit">
+   ⬆ Upload Video
+  </button>
+
+  <button class="btn secondary"
+   type="button" onclick="adminLogout()">
+   Logout
+  </button>
+
+ </form>
+
+ <p style="font-size:12px;color:#9caec7;margin-top:12px">
+  Videos are saved in this browser on this device.
+ </p>
+</section>
+
+<section class="hero" id="home">
+ <img
+ src="https://images.unsplash.com/photo-1440404653325-ab127d49abc1?w=1400"
+ alt="Entertainment">
+
+ <div class="hero-content">
+  <h1>ALL ROUNDER</h1>
+  <p>Your World of Entertainment. Movies, Stories & Originals.</p>
+  <button class="btn"
+   onclick="document.getElementById('movies').scrollIntoView()">
+   ▶ Explore Now
+  </button>
+  <button class="btn secondary"
+   onclick="document.getElementById('originals').scrollIntoView()">
+   Originals
+  </button>
+ </div>
+</section>
+
+<div class="dots"><i></i><i></i><i></i><i></i></div>
+
+<main>
+
+<!-- TRENDING -->
+
+<section class="section">
+ <div class="section-title">
+  Trending Now <small>Explore ›</small>
+ </div>
+ <div class="row">
+
+  <div class="poster">
+   <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=400" alt="">
+   <h3>Movie Collection</h3><p>Trending</p>
+  </div>
+
+  <div class="poster">
+   <img src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=400" alt="">
+   <h3>Cinema World</h3><p>Popular</p>
+  </div>
+
+  <div class="poster">
+   <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=400" alt="">
+   <h3>Adventure</h3><p>Featured</p>
+  </div>
+
+  <div class="poster">
+   <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=400" alt="">
+   <h3>New Stories</h3><p>Latest</p>
+  </div>
+
+ </div>
+</section>
+
+<!-- MOVIES -->
+
+<section class="section" id="movies">
+ <div class="section-title">Movies <small>View All ›</small></div>
+ <div class="row">
+
+  <div class="poster">
+   <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?w=400" alt="">
+   <h3>Movies</h3><p>Entertainment</p>
+  </div>
+
+  <div class="poster">
+   <img src="https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=400" alt="">
+   <h3>Action World</h3><p>Action</p>
+  </div>
+
+  <div class="poster">
+   <img src="https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?w=400" alt="">
+   <h3>Drama</h3><p>Drama</p>
+  </div>
+
+ </div>
+</section>
+
+<!-- SHORT FILMS -->
+
+<section class="section" id="shorts">
+ <div class="section-title">Short Films <small>View All ›</small></div>
+ <div class="row">
+
+  <div class="poster">
+   <img src="https://images.unsplash.com/photo-1492619375914-88005aa9e8fb?w=400" alt="">
+   <h3>Short Stories</h3><p>Short Film</p>
+  </div>
+
+  <div class="poster">
+   <img src="https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=400" alt="">
+   <h3>Mini Cinema</h3><p>Short Film</p>
+  </div>
+
+ </div>
+</section>
+
+<!-- CARTOONS -->
+
+<section class="section" id="cartoons">
+ <div class="section-title">Cartoons & Animation</div>
+ <div class="row">
+
+  <div class="poster">
+   <img src="https://images.unsplash.com/photo-1533929736458-ca588d08c8be?w=400" alt="">
+   <h3>Animation</h3><p>Cartoons</p>
+  </div>
+
+  <div class="poster">
+   <img src="https://images.unsplash.com/photo-1500534623283-312aade485b7?w=400" alt="">
+   <h3>Fantasy World</h3><p>Animation</p>
+  </div>
+
+ </div>
+</section>
+
+<!-- SERIES -->
+
+<section class="section" id="series">
+ <div class="section-title">Web Series <small>View All ›</small></div>
+ <div class="row">
+
+  <div class="poster">
+   <img src="https://images.unsplash.com/photo-1519608487953-e999c86e7455?w=400" alt="">
+   <h3>Series World</h3><p>Web Series</p>
+  </div>
+
+  <div class="poster">
+   <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=400" alt="">
+   <h3>Mystery</h3><p>Web Series</p>
+  </div>
+
+ </div>
+</section>
+
+<!-- ORIGINALS -->
+
+<section class="section" id="originals">
+ <div class="section-title">
+  All Rounder Originals <small>Exclusive</small>
+ </div>
+
+ <div class="banner">
+  <h2>Original Stories. Only Here.</h2>
+  <p>Discover our own movies and exclusive series.</p>
+  <button class="btn">Discover Originals</button>
+ </div>
+</section>
+
+<!-- COMING SOON -->
+
+<section class="section" id="comingSoon">
+
+ <div class="section-title">
+  Coming Soon <small>Upcoming Releases ›</small>
+ </div>
+
+ <div class="row">
+
+  <div class="coming-card">
+   <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=400" alt="Upcoming Movie">
+
+   <div class="coming-info">
+    <h3>Upcoming Movie 1</h3>
+    <p>Release: 15 December 2026</p>
+    <button class="trailer-btn"
+     onclick="openTrailer('YOUR_YOUTUBE_VIDEO_ID')">
+     ▶ Watch Trailer
+    </button>
+   </div>
+  </div>
+
+  <div class="coming-card">
+   <img src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=400" alt="Upcoming Series">
+
+   <div class="coming-info">
+    <h3>Upcoming Series</h3>
+    <p>Release: Coming Soon</p>
+    <button class="trailer-btn"
+     onclick="openTrailer('YOUR_YOUTUBE_VIDEO_ID')">
+     ▶ Watch Trailer
+    </button>
+   </div>
+  </div>
+
+ </div>
+
+</section>
+
+<!-- CATEGORIES -->
+
+<section class="section">
+ <div class="section-title">Explore Categories</div>
+
+ <div class="category">
+  <div><span>🎬</span>Movies</div>
+  <div><span>🎥</span>Short Films</div>
+  <div><span>🎨</span>Cartoons</div>
+  <div><span>📺</span>Series</div>
+  <div><span>⭐</span>Originals</div>
+  <div><span>🔥</span>Trending</div>
+ </div>
+</section>
+
+<!-- UPLOADED VIDEOS -->
+
+<section class="section" id="uploadedSection">
+ <div class="section-title">
+  Uploaded Videos <small>Latest Uploads</small>
+ </div>
+ <div class="row" id="uploadedVideos">
+  <p class="empty">No uploaded videos yet.</p>
+ </div>
+</section>
+
+<!-- DOWNLOADS -->
+
+<section class="section">
+ <div class="download-box">
+  <div>
+   <h3>My Downloads</h3>
+   <p>Watch your downloaded videos offline.</p>
+  </div>
+  <span style="font-size:30px">⬇️</span>
+ </div>
+</section>
+
+</main>
+
+<!-- TRAILER PLAYER -->
+
+<div class="trailer-modal" id="trailerModal">
+ <div class="trailer-content">
+  <button class="close-trailer" onclick="closeTrailer()">
+   ✕ Close
+  </button>
+
+  <iframe id="trailerFrame"
+   allow="autoplay; encrypted-media; picture-in-picture"
+   allowfullscreen>
+  </iframe>
+ </div>
+</div>
+
+<!-- BOTTOM NAVIGATION -->
+
+<footer>
+ <a href="#home"><span>⌂</span>Home</a>
+ <a href="#movies"><span>▣</span>Movies</a>
+ <a href="#series"><span>▤</span>Series</a>
+ <a href="#comingSoon"><span>◷</span>Upcoming</a>
+ <a href="#uploadedSection"><span>⬇</span>Uploads</a>
+</footer>
+
+<script>
+
+/* ADMIN PASSWORD */
+const ADMIN_PASSWORD = "1234";
+
+let adminAccess = false;
+let uploadDB;
+
+/* SEARCH */
+
+function toggleSearch(){
+ const s=document.getElementById('search');
+ s.style.display=s.style.display==='block'?'none':'block';
+}
+
+function searchVideos(){
+ const value=document.getElementById('searchInput')
+ .value.toLowerCase();
+
+ document.querySelectorAll('.poster,.coming-card,.uploaded-video-card')
+ .forEach(p=>{
+  p.style.display=p.innerText.toLowerCase()
+  .includes(value)?'block':'none';
+ });
+}
+
+/* ADMIN LOGIN */
+
+function adminLogin(){
+
+ if(adminAccess){
+  document.getElementById("adminPanel").style.display="block";
+  return;
+ }
+
+ const password = prompt("Enter Admin Password:");
+
+ if(password === null) return;
+
+ if(password === ADMIN_PASSWORD){
+  adminAccess = true;
+  document.getElementById("adminPanel").style.display="block";
+  alert("Admin Login Successful!");
+ }else{
+  alert("Wrong Password!");
+ }
+}
+
+function adminLogout(){
+ adminAccess = false;
+ document.getElementById("adminPanel").style.display="none";
+ alert("Logged out!");
+}
+
+/* LOCAL VIDEO DATABASE */
+
+function openUploadDB(){
+
+ return new Promise((resolve,reject)=>{
+
+  const request = indexedDB.open("AllRounderVideos",1);
+
+  request.onupgradeneeded = function(){
+   const db = request.result;
+
+   if(!db.objectStoreNames.contains("videos")){
+    db.createObjectStore("videos",{
+     keyPath:"id",
+     autoIncrement:true
+    });
+   }
+  };
+
+  request.onsuccess = function(){
+   uploadDB = request.result;
+   resolve();
+  };
+
+  request.onerror = function(){
+   reject(request.error);
+  };
+
+ });
+}
+
+/* SAVE VIDEO */
+
+function saveVideo(data){
+
+ return new Promise((resolve,reject)=>{
+
+  const transaction =
+   uploadDB.transaction("videos","readwrite");
+
+  transaction.objectStore("videos").add(data);
+
+  transaction.oncomplete = resolve;
+  transaction.onerror = ()=>reject(transaction.error);
+
+ });
+}
+
+/* GET VIDEOS */
+
+function getUploadedVideos(){
+
+ return new Promise((resolve,reject)=>{
+
+  const transaction =
+   uploadDB.transaction("videos","readonly");
+
+  const request =
+   transaction.objectStore("videos").getAll();
+
+  request.onsuccess = ()=>resolve(request.result);
+  request.onerror = ()=>reject(request.error);
+
+ });
+}
+
+/* DELETE VIDEO */
+
+function deleteUploadedVideo(id){
+
+ return new Promise((resolve,reject)=>{
+
+  const transaction =
+   uploadDB.transaction("videos","readwrite");
+
+  transaction.objectStore("videos").delete(Number(id));
+
+  transaction.oncomplete = resolve;
+  transaction.onerror = ()=>reject(transaction.error);
+
+ });
+}
+
+/* DISPLAY UPLOADED VIDEOS */
+
+async function displayUploadedVideos(){
+
+ const videos = await getUploadedVideos();
+
+ const container =
+  document.getElementById("uploadedVideos");
+
+ container.innerHTML = "";
+
+ if(videos.length === 0){
+  container.innerHTML =
+   '<p class="empty">No uploaded videos yet.</p>';
+  return;
+ }
+
+ videos.reverse().forEach(video=>{
+
+  const videoURL = URL.createObjectURL(video.file);
+
+  const card = document.createElement("div");
+  card.className = "uploaded-video-card";
+
+  const title = document.createElement("h3");
+  title.textContent = video.title;
+
+  const category = document.createElement("p");
+  category.textContent = video.category;
+
+  const player = document.createElement("video");
+  player.controls = true;
+  player.preload = "metadata";
+  player.src = videoURL;
+
+  if(video.poster){
+   const posterURL = URL.createObjectURL(video.poster);
+   player.poster = posterURL;
+  }
+
+  const description = document.createElement("p");
+  description.textContent = video.description || "";
+
+  const download = document.createElement("a");
+  download.href = videoURL;
+  download.download = video.title + ".mp4";
+  download.textContent = "⬇ Download Video";
+
+  card.appendChild(title);
+  card.appendChild(category);
+  card.appendChild(player);
+  card.appendChild(description);
+  card.appendChild(download);
+
+  if(adminAccess){
+
+   const deleteButton = document.createElement("button");
+   deleteButton.className = "delete-video";
+   deleteButton.textContent = "Delete Video";
+
+   deleteButton.onclick = async function(){
+
+    if(confirm("Delete this video?")){
+     await deleteUploadedVideo(video.id);
+     displayUploadedVideos();
+    }
+
+   };
+
+   card.appendChild(deleteButton);
+  }
+
+  container.appendChild(card);
+
+ });
+
+}
+
+/* UPLOAD FORM */
+
+document.getElementById("uploadForm")
+.addEventListener("submit",async function(event){
+
+ event.preventDefault();
+
+ if(!adminAccess){
+  alert("Please login first!");
+  return;
+ }
+
+ const title =
+  document.getElementById("videoTitle").value.trim();
+
+ const category =
+  document.getElementById("videoCategory").value;
+
+ const file =
+  document.getElementById("videoFile").files[0];
+
+ const poster =
+  document.getElementById("posterFile").files[0] || null;
+
+ const description =
+  document.getElementById("videoDescription").value.trim();
+
+ if(!file || !file.type.startsWith("video/")){
+  alert("Please select a valid video file!");
+  return;
+ }
+
+ try{
+
+  await saveVideo({
+   title:title,
+   category:category,
+   file:file,
+   poster:poster,
+   description:description,
+   date:Date.now()
+  });
+
+  alert("Video uploaded successfully!");
+
+  this.reset();
+
+  displayUploadedVideos();
+
+ }catch(error){
+
+  alert("Upload failed. Browser storage may be full.");
+
+ }
+
+});
+
+/* TRAILER PLAYER */
+
+function openTrailer(videoId){
+
+ if(videoId==='YOUR_YOUTUBE_VIDEO_ID'){
+  alert('Trailer will be added soon!');
+  return;
+ }
+
+ document.getElementById('trailerModal').style.display='flex';
+
+ document.getElementById('trailerFrame').src=
+ 'https://www.youtube.com/embed/'
+ +encodeURIComponent(videoId)+'?autoplay=1';
+
+}
+
+function closeTrailer(){
+
+ document.getElementById('trailerModal').style.display='none';
+
+ document.getElementById('trailerFrame').src='';
+
+}
+
+/* START DATABASE */
+
+openUploadDB()
+.then(displayUploadedVideos)
+.catch(error=>{
+ console.error(error);
+ alert("Could not open local video storage.");
+});
+
+</script>
+
+</body>
+</html>
